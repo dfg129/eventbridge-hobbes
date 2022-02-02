@@ -1,4 +1,4 @@
-import { Stack, StackProps } from 'aws-cdk-lib';
+import { App, Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as events from 'aws-cdk-lib/aws-events';
 import { Rule } from 'aws-cdk-lib/aws-events';
@@ -7,11 +7,11 @@ import * as targets from 'aws-cdk-lib/aws-events-targets';
 import * as path from 'path';
 
 export class EventbridgeHobbesStack extends Stack {
-  constructor(scope: Construct, id: string, props?: StackProps) {
+  constructor(scope: App, id: string, props?: StackProps) {
     super(scope, id, props);
 
     const bus = new events.EventBus(this, 'hobbes-eventbus', {
-      eventBusName: 'HobbesEventBus'
+//      eventBusName: 'HobbesEventBus'
     });
 
     const myFunctionHandler = new lambda.Function(this, 'MyFunction', {
@@ -23,7 +23,7 @@ export class EventbridgeHobbesStack extends Stack {
     const storageRule = new Rule(this, 'store-rule', {
       description: "Send to DB lambda",
       enabled: true,
-      ruleName: "StorageRule",
+//      ruleName: "StorageRule",
       eventBus: bus,
     });
 
@@ -33,6 +33,5 @@ export class EventbridgeHobbesStack extends Stack {
       account: ['707338571369'],
       source: ['aws.s3'],
     });
-
   }
 }
